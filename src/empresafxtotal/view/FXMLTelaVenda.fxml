@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empresafxtotal.controller.FXMLTelaVendaController">
+   <children>
+  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <ComboBox fx:id="comboBoxFuncionario" layoutX="14.0" layoutY="28.0" prefWidth="150.0" promptText="Funcionarios" />
+            <ComboBox fx:id="comboBoxCliente" layoutX="14.0" layoutY="62.0" prefWidth="150.0" promptText="Clientes" />
+            <ComboBox fx:id="comboBoxProdutos" layoutX="14.0" layoutY="100.0" prefWidth="150.0" promptText="Produtos" />
+            <TextField fx:id="textFieldValor" layoutX="15.0" layoutY="137.0" promptText="Valor unitario" />
+            <TextField fx:id="textFieldQtd" layoutX="15.0" layoutY="175.0" promptText="Quantidade" />
+            <Button layoutX="97.0" layoutY="221.0" mnemonicParsing="false" onAction="#load" text="Adicionar" />
+            <TableView fx:id="tableViewVendasItens" layoutX="194.0" layoutY="26.0" prefHeight="325.0" prefWidth="392.0">
+               <columns>
+                  <TableColumn fx:id="nome" prefWidth="166.0" text="Nome" />
+                  <TableColumn fx:id="idade" prefWidth="115.0" text="Valor unitario" />
+                  <TableColumn fx:id="email" prefWidth="107.0" text="Quantidade" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Button layoutX="545.0" layoutY="361.0" mnemonicParsing="false" onAction="#save" text="Save" />
+   </children>
+</AnchorPane>
