@@ -102,13 +102,11 @@ public class Venda {
     public void setPkVenda(int pkVenda) {
         this.pkVenda = pkVenda;
         this.itens.forEach((a)->a.setFkVenda(pkVenda));
-                
-                }
+    }
 
     @Override
     public String toString() {
-        return "Venda{" + "numero=" + numero + ", data=" + data + ", cliente=" + cliente + ", vendedor=" + vendedor + ", itens=" + itens + ", pkVenda=" + pkVenda + '}';
-    }
+return "Vemda: "+numero;    }
     
     
 }

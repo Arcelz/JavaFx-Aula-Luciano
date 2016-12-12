@@ -34,7 +34,7 @@ public class VendaDAO {
         rs.next();
         int key = rs.getInt(1);
         venda.setPkVenda(key);
-        int count=0;
+        System.out.println(key);
         ArrayList<VendaItem> itens = new ArrayList<>(venda.getItens());
         System.out.println(itens);
        itens.forEach((a)->{
@@ -54,7 +54,7 @@ public class VendaDAO {
         ResultSet rs = stm.executeQuery(sql);
         rs.next();
 
-        VendaItem vendaItem = VendaItemDAO.retreaveByVenda(pk_venda);
+        ArrayList<VendaItem> vendaitem = VendaItemDAO.retreaveByVenda(rs.getInt("pk_venda"));
 
         return new Venda(
                 ClienteDAO.retreave(rs.getInt("fk_cliente")),
@@ -68,7 +68,7 @@ public class VendaDAO {
         String sql = "select * from vendas where fk_cliente =" + fkVenda;
         ResultSet rs = stm.executeQuery(sql);
         rs.next();
-        VendaItem vendaItem = VendaItemDAO.retreaveByVenda(fkVenda);
+          ArrayList<VendaItem> vendaitem = VendaItemDAO.retreaveByVenda(rs.getInt("pk_venda"));
 
         return new Venda(
                 ClienteDAO.retreave(rs.getInt("fk_cliente")),
@@ -83,23 +83,32 @@ public class VendaDAO {
         rs.next();
         return rs.getInt(1);
     }
+     
+     public static int retreaveNumero(int numero) throws SQLException {
+        Statement stm = BancoDados.createConnection().createStatement();
+        String sql = "select pk_venda from vendas where numero="+numero;
+        ResultSet rs = stm.executeQuery(sql);
+        rs.next();
+        return rs.getInt(1);
+    }
     
 
     public static ArrayList<Venda> retreaveAll() throws SQLException {
         Statement stm = BancoDados.createConnection().createStatement();
-        String sql = "select * from vendas ";
+        String sql = "select * from vendas";
         ResultSet rs = stm.executeQuery(sql);
         ArrayList<Venda> listaVenda = new ArrayList<>();
         
         while (rs.next()) {
 
-            VendaItem vendaItem = VendaItemDAO.retreaveByVenda(rs.getInt("pk_venda"));
-
+            ArrayList<VendaItem> vendaitem = VendaItemDAO.retreaveByVenda(rs.getInt("pk_venda"));
             listaVenda.add(new Venda(
+                    rs.getInt("numero"),
+                    rs.getDate("datas"),
                     ClienteDAO.retreave(rs.getInt("fk_cliente")),
                     FuncionarioDAO.retreave(rs.getInt("fk_vendedor")),
-                    rs.getInt("numero"),
-                    rs.getDate("datas")));
+                    vendaitem
+                 ));
         }
         return listaVenda;
     }
@@ -112,12 +121,20 @@ public class VendaDAO {
 
     public static void update(Venda venda) throws SQLException {
         Statement stm = BancoDados.createConnection().createStatement();
-        String sql = "update clientes set"
-                + "fk_cliente =" + venda.getCliente().getPk_cliente()
-                + "fk_vendedor =" + venda.getVendedor().getPk_funcionario()
-                + "numero" + venda.getNumero()
-                + "data" + venda.getData()
-                + "where pk_venda =" + venda.getPkVenda();
-        stm.execute(sql);
+        String sql = "update vendas set "
+                + "fk_cliente ='" + venda.getCliente().getPk_cliente()
+                + "',fk_vendedor ='" + venda.getVendedor().getPk_funcionario()
+                + "',numero ='" + venda.getNumero()
+                + "',datas ='" + venda.getData()
+                + "' where pk_venda =" + venda.getPkVenda();
+        System.out.println(sql);
+         stm.execute(sql);
+         venda.getItens().forEach((a)-> {
+            try {
+                VendaItemDAO.update(a);
+            } catch (SQLException ex) {
+                Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 }

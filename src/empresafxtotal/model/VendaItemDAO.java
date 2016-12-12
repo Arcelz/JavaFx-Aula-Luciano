@@ -36,7 +36,7 @@ public class VendaItemDAO {
 
     public static VendaItem retreave(int pkVenda) throws SQLException {
         Statement stm = BancoDados.createConnection().createStatement();
-        String sql = "select * from vendas_itens where pk_venda = " + pkVenda;
+        String sql = "select * from vendas_itens where fk_venda = " + pkVenda;
         ResultSet rs = stm.executeQuery(sql);
         rs.next();
 
@@ -47,17 +47,22 @@ public class VendaItemDAO {
                 rs.getDouble("valor_unitario"));
     }
 
-    public static VendaItem retreaveByVenda(int fkVenda) throws SQLException {
+    public static ArrayList<VendaItem> retreaveByVenda(int fkVenda) throws SQLException {
         Statement stm = BancoDados.createConnection().createStatement();
-        String sql = "select * from vendas_itens where pk_venda = " + fkVenda;
+        System.out.println(fkVenda);
+        String sql = "select * from vendas_itens where fk_venda = " + fkVenda;
         ResultSet rs = stm.executeQuery(sql);
-        rs.next();
-
-        return new VendaItem(
+           ArrayList<VendaItem> vendaitens = new ArrayList<>();
+        while(rs.next()){
+            
+                vendaitens.add( new VendaItem(
                 rs.getInt("fk_venda"),
                 ProdutoDAO.retreave(rs.getInt("fk_produto")),
                 rs.getInt("qtd"),
-                rs.getDouble("valor_unitario"));
+                rs.getDouble("valor_unitario")));
+        
+        }
+        return vendaitens;
     }
 
     public static ArrayList<VendaItem> retreaveAll() throws SQLException {
@@ -76,19 +81,28 @@ public class VendaItemDAO {
         }
         return listaVendaItem;
     }
-    public static void delete( VendaItem vendaItem) throws SQLException{
-        Statement stm = BancoDados.createConnection().createStatement();
-        String sql= "delete from vendas_itens where pk_venda = " + vendaItem.getPkVendaItem();
-        stm.equals(sql);
-    }
+    
     public static void update(VendaItem vendaItem) throws SQLException{
         Statement stm = BancoDados.createConnection().createStatement();
-        String sql ="update vendas_itens set" 
-                + "fk_venda = " + vendaItem.getFkVenda()
-                + ", fk_produto = " + vendaItem.getProduto().getPk_produto()
-                + ", qtd = " + vendaItem.getQtd()
-                + ", valorUnitario = " + vendaItem.getValorUnitario()
-                 + " where pk_vendaItem = " + vendaItem.getPkVendaItem();
+        String sql ="update vendas_itens set " 
+                + "fk_venda = '" + vendaItem.getFkVenda()
+                + "', fk_produto = '" + vendaItem.getProduto().getPk_produto()
+                + "', qtd = '" + vendaItem.getQtd()
+                + "', valor_unitario = '" + vendaItem.getValorUnitario()
+                 + "' where pk_item = " + vendaItem.getPkVendaItem();
+        System.out.println(sql);
     stm.execute(sql);
+    }
+     public static ArrayList<Integer> retreaveFkVendaItem(int fkVenda) throws SQLException {
+        Statement stm = BancoDados.createConnection().createStatement();
+        String sql = "select * from vendas_itens where fk_venda =" + fkVenda;
+        ResultSet rs = stm.executeQuery(sql);
+        ArrayList<Integer> vendaitem =new ArrayList<>();
+        while(rs.next()){
+          
+       vendaitem.add(
+               rs.getInt("pk_item"));
+    }
+        return vendaitem;
     }
 }

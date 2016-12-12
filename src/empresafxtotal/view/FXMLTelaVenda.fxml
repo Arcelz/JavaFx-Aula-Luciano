@@ -27,5 +27,8 @@
          </children>
       </AnchorPane>
       <Button layoutX="545.0" layoutY="361.0" mnemonicParsing="false" onAction="#save" text="Save" />
+      <Button layoutX="100.0" layoutY="252.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="67.0" text="Deletar" />
+      <ComboBox fx:id="comboVendas" layoutX="14.0" layoutY="287.0" prefHeight="25.0" prefWidth="150.0" />
+      <Button layoutX="108.0" layoutY="321.0" mnemonicParsing="false" onAction="#carregar" text="Load" />
    </children>
 </AnchorPane>
