@@ -6,22 +6,20 @@
 package empresafxtotal.controller;
 
 import empresafxtotal.model.ClienteDAO;
-import empresafxtotal.model.EnderecoDAO;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * FXML Controller class
- *
- * @author Usuario-PC
- */
+
 public class FXMLMantemClienteController implements Initializable {
   private Endereco e;
     private Cliente c;
@@ -84,12 +82,23 @@ public class FXMLMantemClienteController implements Initializable {
 "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
 "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
         
-        List<Cliente> l = ClienteDAO.retreaveAll();
-        comboBoxClientes.getItems().addAll(l);
+        List<Cliente> l;
+      try {
+          l = ClienteDAO.retreaveAll();
+           comboBoxClientes.getItems().addAll(l);
+      } catch (SQLException ex) {
+          Alert alert = new Alert(Alert.AlertType.ERROR);
+
+ alert.setTitle("Aconteceu um erro em cliente");
+            alert.setHeaderText("Erro em carregar cliente");
+            alert.setContentText(Logger.getLogger(FXMLMantemClienteController.class.getName()).getName());
+
+            alert.showAndWait();      }
+      
     }    
     public void load(){
         c = comboBoxClientes.getValue();
-        
+        e = comboBoxClientes.getValue().getEndereco();
         textFieldNome.setText(c.getNome());
         textFieldCPF.setText(c.getCpf());
         textFieldEndereco.setText(c.getEndereco().getLogradouro());
@@ -112,29 +121,47 @@ public class FXMLMantemClienteController implements Initializable {
         comboBoxEstado.getSelectionModel().clearSelection();
         comboBoxPais.getSelectionModel().clearSelection();
     }
-    public void salvar() throws SQLException {
-        boolean insert = false;
+    public void salvar()  {
+    boolean salvar =false;
 
         if (c == null) {
             c = new Cliente();
             e = new Endereco();
-            insert = true;
+            salvar=true;
         }
-        //Controller.Endereco e = new Controller.Endereco(logradouro, bairro, cidade, estado, pais, cep)
+            e.setBairro(textFieldBairro.getText());
+            e.setEstado(comboBoxEstado.getValue());
+            e.setLogradouro(textFieldEndereco.getText());
+            e.setCidade(textFieldCidade.getText());
+            e.setPais(comboBoxPais.getValue());
+            e.setCep(textFieldCEP.getText());
+            c.setNome(textFieldNome.getText());
+            c.setCpf(textFieldCPF.getText());
+            c.setEndereco(e);
+            if(salvar){
+            try {
+                c.save();
+            } catch (SQLException ex) {
+  Alert alert = new Alert(Alert.AlertType.ERROR);
 
-        //c.setEndereco(e);
-        //ClienteDAO.create(c);
-        if (insert) {
-              e = new Endereco(textFieldEndereco.getText(), textFieldBairro.getText(), textFieldCidade.getText(), comboBoxEstado.getValue(), comboBoxPais.getValue(), textFieldCEP.getText());
-            c= new Cliente(textFieldNome.getText(), textFieldCPF.getText());
-            c.setEndereco(e);
-            c.save();
-        } else {
-         e = new Endereco(textFieldEndereco.getText(), textFieldBairro.getText(), textFieldCidade.getText(), comboBoxEstado.getValue(), comboBoxPais.getValue(), textFieldCEP.getText(), pkEndereco, fkCliente);
-            c = new Cliente(fkCliente, textFieldNome.getText(), textFieldCPF.getText());
-            c.setEndereco(e);
-            c.update();
+ alert.setTitle("Aconteceu um erro em cliente");
+            alert.setHeaderText("Erro em salvar cliente");
+            alert.setContentText(Logger.getLogger(FXMLMantemClienteController.class.getName()).toString());
+
+            alert.showAndWait();             }
         }
+            else{
+            try {
+                c.update();
+            } catch (SQLException ex) {
+                  Alert alert = new Alert(Alert.AlertType.ERROR);
+
+ alert.setTitle("Aconteceu um erro em cliente");
+            alert.setHeaderText("Erro em atualizar cliente");
+            alert.setContentText(Logger.getLogger(FXMLMantemClienteController.class.getName()).toString());
+            alert.showAndWait(); 
+            }
+           }
 
         limpaTela();
 

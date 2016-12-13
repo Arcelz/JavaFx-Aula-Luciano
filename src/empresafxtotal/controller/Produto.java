@@ -6,10 +6,8 @@
 package empresafxtotal.controller;
 
 import empresafxtotal.model.ProdutoDAO;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -77,10 +75,10 @@ return nome;    }
 
    
     
-    public void save(){
+    public void save() throws SQLException{
         ProdutoDAO.create(this);
     }
-    public void update(){
+    public void update() throws SQLException{
         ProdutoDAO.update(this);
     }
    

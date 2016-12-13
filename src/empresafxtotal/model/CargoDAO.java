@@ -6,8 +6,6 @@
 package empresafxtotal.model;
 
 import empresafxtotal.controller.Cargo;
-import empresafxtotal.controller.Cliente;
-import empresafxtotal.controller.Endereco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,8 +19,8 @@ public class CargoDAO {
 
     }
 
-    public static int create(Cargo c) {
-        try {
+    public static int create(Cargo c) throws SQLException {
+        
             Statement stm = BancoDados.createConnection().createStatement();
             //
             String sql = "insert into cargos (nome,descricao) values('" + c.getNome() + "','" + c.getDescricao() + "')";
@@ -35,15 +33,11 @@ public class CargoDAO {
 
             return key;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return 0;
+     
     }
 
-    public static Cargo retreave(int pk_cargo) {
-        try {
+    public static Cargo retreave(int pk_cargo) throws SQLException {
+        
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -55,15 +49,11 @@ public class CargoDAO {
 
             return new Cargo(rs.getInt("pk_cargo"), rs.getString("nome"), rs.getString("descricao"));
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+     
     }
 
-    public static ArrayList<Cargo> retreaveAll() {
-        try {
+    public static ArrayList<Cargo> retreaveAll() throws SQLException {
+     
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -80,40 +70,30 @@ public class CargoDAO {
             }
 
             return cs;
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+      
     }
 
-    public static void delete(Cargo c) {
+    public static void delete(Cargo c) throws SQLException {
 
-        try {
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
             String sql = "delete from cargos where pk_cliente=" + c.getPk_cargo();
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
 
-    }
+    
 
-    public static void update(Cargo c) {
-        try {
+    public static void update(Cargo c) throws SQLException {
+ 
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
             String sql = "update  cargos set " + "nome='" + c.getNome() + "',descricao='" + c.getDescricao()+ "'where pk_cargo =" + c.getPk_cargo();
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    
     }
 
 }

@@ -2,6 +2,7 @@
 package empresafxtotal.controller;
 
 import empresafxtotal.model.FornecedorDAO;
+import java.sql.SQLException;
 
 
 public class Fornecedor {
@@ -69,11 +70,11 @@ public class Fornecedor {
         return nome;
     }
     
-    public void save(){
+    public void save() throws SQLException{
         FornecedorDAO.create(this);
     }
     
-    public void update(){
+    public void update() throws SQLException{
         FornecedorDAO.update(this);
     }
     

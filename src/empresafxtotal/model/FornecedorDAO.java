@@ -17,9 +17,8 @@ public class FornecedorDAO {
 
     }
 
-    public static int create(Fornecedor forne) {
-        try {
-            Statement stm = BancoDados.createConnection().createStatement();
+    public static int create(Fornecedor forne) throws SQLException {
+          Statement stm = BancoDados.createConnection().createStatement();
             //
             String sql = "insert into fornecedores (nome,cpf) values('" + forne.getNome() + "','" + forne.getCpf() + "')";
 
@@ -33,15 +32,29 @@ public class FornecedorDAO {
 
             return key;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return 0;
+    
     }
 
-    public static Fornecedor retreave(int pk_fornecedor) {
-        try {
+    public static Fornecedor retreave(int pk_fornecedor) throws SQLException {
+      
+            Statement stm
+                    = BancoDados.createConnection().
+                    createStatement();
+
+            String sql = "Select * from fornecedores where pk_fornecedor=" + pk_fornecedor;
+
+            ResultSet rs = stm.executeQuery(sql);
+            rs.next();
+
+            FornecedorEndereco e = FornecedorEnderecoDAO.retreaveByFornecedor(pk_fornecedor);
+            return new Fornecedor(rs.getInt("pk_fornecedor"), rs.getString("nome"), rs.getString("cpf"), e);
+
+      
+        
+    }
+
+    public static Fornecedor retreaveByForneceEnd(int pk_fornecedor) throws SQLException {
+       
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -54,36 +67,12 @@ public class FornecedorDAO {
             FornecedorEndereco e = FornecedorEnderecoDAO.retreaveByFornecedor(pk_fornecedor);
             return new Fornecedor(rs.getInt("pk_cliente"), rs.getString("nome"), rs.getString("cpf"), e);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+     
+            
     }
 
-    public static Fornecedor retreaveByForneceEnd(int pk_fornecedor) {
-        try {
-            Statement stm
-                    = BancoDados.createConnection().
-                    createStatement();
-
-            String sql = "Select * from fornecedores where pk_cliente=" + pk_fornecedor;
-
-            ResultSet rs = stm.executeQuery(sql);
-            rs.next();
-
-            FornecedorEndereco e = FornecedorEnderecoDAO.retreaveByFornecedor(pk_fornecedor);
-            return new Fornecedor(rs.getInt("pk_cliente"), rs.getString("nome"), rs.getString("cpf"), e);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
-    }
-
-   public static ArrayList<Fornecedor> retreaveAll() {
-        try {
+   public static ArrayList<Fornecedor> retreaveAll() throws SQLException {
+    
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -105,30 +94,24 @@ public class FornecedorDAO {
             }
  
             return cs;
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
- 
-        return null;
+   
     }
 
-    public static void delete(Fornecedor f) {
+    public static void delete(Fornecedor f) throws SQLException {
 
-        try {
+       
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
             String sql = "delete from fornecedores where pk_fornecedor=" + f.getPk_fornecedor();
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+     
 
     }
 
-    public static void update(Fornecedor f) {
-        try {
+    public static void update(Fornecedor f) throws SQLException {
+    
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -136,9 +119,7 @@ public class FornecedorDAO {
             FornecedorEnderecoDAO.update(f.getForneEnd());
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    
 
     }
 

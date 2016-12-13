@@ -5,6 +5,8 @@
  */
 package empresafxtotal.controller;
 
+import empresafxtotal.model.VendaDAO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -107,6 +109,17 @@ public class Venda {
     @Override
     public String toString() {
 return "Vemda: "+numero;    }
+    
+    public void save() throws SQLException{
+        VendaDAO.create(this);
+    }
+    public void update() throws SQLException{
+        VendaDAO.update(this);
+    }
+    public void deletar() throws SQLException{
+        VendaDAO.delete(this);
+    }
+    
     
     
 }

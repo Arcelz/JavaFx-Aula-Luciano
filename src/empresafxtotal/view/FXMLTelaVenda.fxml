@@ -2,10 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empresafxtotal.controller.FXMLTelaVendaController">
    <children>
@@ -15,20 +17,32 @@
             <ComboBox fx:id="comboBoxCliente" layoutX="14.0" layoutY="62.0" prefWidth="150.0" promptText="Clientes" />
             <ComboBox fx:id="comboBoxProdutos" layoutX="14.0" layoutY="100.0" prefWidth="150.0" promptText="Produtos" />
             <TextField fx:id="textFieldValor" layoutX="15.0" layoutY="137.0" promptText="Valor unitario" />
-            <TextField fx:id="textFieldQtd" layoutX="15.0" layoutY="175.0" promptText="Quantidade" />
-            <Button layoutX="97.0" layoutY="221.0" mnemonicParsing="false" onAction="#load" text="Adicionar" />
             <TableView fx:id="tableViewVendasItens" layoutX="194.0" layoutY="26.0" prefHeight="325.0" prefWidth="392.0">
                <columns>
-                  <TableColumn fx:id="nome" prefWidth="166.0" text="Nome" />
-                  <TableColumn fx:id="idade" prefWidth="115.0" text="Valor unitario" />
-                  <TableColumn fx:id="email" prefWidth="107.0" text="Quantidade" />
+                  <TableColumn fx:id="tableColumnNome" prefWidth="166.0" resizable="false" text="Nome" />
+                  <TableColumn fx:id="tableColumnValorUnitario" prefWidth="115.0" resizable="false" text="Valor unitario" />
+                  <TableColumn fx:id="tableColumnQuantidade" prefWidth="110.0" resizable="false" text="Quantidade" />
                </columns>
             </TableView>
          </children>
       </AnchorPane>
-      <Button layoutX="545.0" layoutY="361.0" mnemonicParsing="false" onAction="#save" text="Save" />
-      <Button layoutX="100.0" layoutY="252.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="67.0" text="Deletar" />
-      <ComboBox fx:id="comboVendas" layoutX="14.0" layoutY="287.0" prefHeight="25.0" prefWidth="150.0" />
-      <Button layoutX="108.0" layoutY="321.0" mnemonicParsing="false" onAction="#carregar" text="Load" />
+      <Button layoutX="538.0" layoutY="361.0" mnemonicParsing="false" onAction="#save" text="Salvar" />
+      <Button fx:id="botaoDeletar" layoutX="100.0" layoutY="232.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="67.0" text="Deletar" AnchorPane.rightAnchor="435.0" />
+      <ComboBox fx:id="comboVendas" layoutX="14.0" layoutY="268.0" prefHeight="25.0" prefWidth="102.0" promptText="Vendas" />
+      <Button layoutX="116.0" layoutY="268.0" mnemonicParsing="false" onAction="#carregar" prefHeight="25.0" prefWidth="47.0" text="Load" />
+      <Button fx:id="botaoAdicionar" layoutX="14.0" layoutY="232.0" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="67.0" text="Adicionar" />
+      <TextField fx:id="textFieldNumero" disable="true" layoutX="14.0" layoutY="200.0" prefHeight="25.0" prefWidth="150.0" promptText="Numero" />
+      <TextField fx:id="textFieldQtd" layoutX="14.0" layoutY="168.0" prefHeight="25.0" prefWidth="150.0" promptText="Quantidade" />
+      <Label layoutX="192.0" layoutY="363.0" prefHeight="21.0" prefWidth="108.0" text="Total Compra :">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelValorTotal" layoutX="300.0" layoutY="363.0" prefHeight="21.0" prefWidth="116.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="botaoLimpar" layoutX="480.0" layoutY="361.0" mnemonicParsing="false" onAction="#clear" text="Limpar" />
    </children>
 </AnchorPane>

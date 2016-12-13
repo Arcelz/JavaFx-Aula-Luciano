@@ -6,6 +6,7 @@
 package empresafxtotal.controller;
 
 import empresafxtotal.model.FuncionarioDAO;
+import java.sql.SQLException;
 
 
 public class Funcionario {
@@ -106,10 +107,10 @@ public class Funcionario {
     public String toString() {
         return nome;
     }
-    public void save(){
+    public void save() throws SQLException{
         FuncionarioDAO.create(this);
     }
-    public void update(){
+    public void update() throws SQLException{
         FuncionarioDAO.update(this);
     }
     

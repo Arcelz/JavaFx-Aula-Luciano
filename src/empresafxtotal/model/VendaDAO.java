@@ -3,16 +3,11 @@ package empresafxtotal.model;
 
 import empresafxtotal.controller.Venda;
 import empresafxtotal.controller.VendaItem;
-import empresafxtotal.model.BancoDados;
-import empresafxtotal.model.ClienteDAO;
-import empresafxtotal.model.FuncionarioDAO;
-import empresafxtotal.model.VendaItemDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class VendaDAO {
 
@@ -36,15 +31,9 @@ public class VendaDAO {
         venda.setPkVenda(key);
         System.out.println(key);
         ArrayList<VendaItem> itens = new ArrayList<>(venda.getItens());
-        System.out.println(itens);
-       itens.forEach((a)->{
-            try {
-                VendaItemDAO.create(a);
-            } catch (SQLException ex) {
-                Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
+        for(VendaItem arrayItem :itens){
+            VendaItemDAO.create(arrayItem);
+        }
         return key;
     }
 
@@ -84,15 +73,7 @@ public class VendaDAO {
         return rs.getInt(1);
     }
      
-     public static int retreaveNumero(int numero) throws SQLException {
-        Statement stm = BancoDados.createConnection().createStatement();
-        String sql = "select pk_venda from vendas where numero="+numero;
-        ResultSet rs = stm.executeQuery(sql);
-        rs.next();
-        return rs.getInt(1);
-    }
-    
-
+  
     public static ArrayList<Venda> retreaveAll() throws SQLException {
         Statement stm = BancoDados.createConnection().createStatement();
         String sql = "select * from vendas";
@@ -107,7 +88,8 @@ public class VendaDAO {
                     rs.getDate("datas"),
                     ClienteDAO.retreave(rs.getInt("fk_cliente")),
                     FuncionarioDAO.retreave(rs.getInt("fk_vendedor")),
-                    vendaitem
+                    vendaitem,
+                    rs.getInt("pk_venda")
                  ));
         }
         return listaVenda;
@@ -129,12 +111,9 @@ public class VendaDAO {
                 + "' where pk_venda =" + venda.getPkVenda();
         System.out.println(sql);
          stm.execute(sql);
-         venda.getItens().forEach((a)-> {
-            try {
-                VendaItemDAO.update(a);
-            } catch (SQLException ex) {
-                Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+         for (VendaItem vend : venda.getItens()){
+             VendaItemDAO.update(vend);
+         }
+
     }
 }

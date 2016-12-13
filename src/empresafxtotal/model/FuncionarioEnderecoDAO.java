@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 public class FuncionarioEnderecoDAO {
     
     
-     public static int create (FuncionarioEndereco funcEnd){
-        try {
+     public static int create (FuncionarioEndereco funcEnd) throws SQLException{
+ 
             Statement stm = BancoDados.createConnection().createStatement();
             //INSERT INTO public.clientes_enderecos(
             //pk_enderenco, fk_cliente, logradouro, bairro, cidade, estado, 
@@ -39,16 +39,11 @@ public class FuncionarioEnderecoDAO {
             funcEnd.setPk_endereco(key);
             
             return key;
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-            return 0;
+    
         }
      
-     public static FuncionarioEndereco retreave(int pkFuncionario) {
-        try {
+     public static FuncionarioEndereco retreave(int pkFuncionario) throws SQLException {
+        
             Statement stm = BancoDados.createConnection().createStatement();//abrindo conexão no banco
 
             String sql = "Select * from funcionarios_enderecos  where pk_endereco =" + pkFuncionario;
@@ -63,15 +58,13 @@ public class FuncionarioEnderecoDAO {
                         rs.getInt("pk_endereco"),
                         rs.getInt("fk_funcionario"));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+   
 
         return null;
     }
 
-    public static FuncionarioEndereco retreaveByFuncionario(int fkFuncionario) {
-        try {
+    public static FuncionarioEndereco retreaveByFuncionario(int fkFuncionario) throws SQLException {
+        
             Statement stm = BancoDados.createConnection().createStatement();//abrindo conexão no banco
 
             String sql = "Select * from funcionarios_enderecos  where fk_funcionario =" + fkFuncionario;
@@ -87,15 +80,13 @@ public class FuncionarioEnderecoDAO {
                         rs.getInt("pk_endereco"),
                         rs.getInt("fk_funcionario"));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
 
         return null;
     }
 
-    public static ArrayList<FuncionarioEndereco> retreaveAll() {
-        try {
+    public static ArrayList<FuncionarioEndereco> retreaveAll() throws SQLException {
+       
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -117,30 +108,22 @@ public class FuncionarioEnderecoDAO {
             }
 
             return e;
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+  
     }
     
-     public static void delete(FuncionarioEndereco fe) {
+     public static void delete(FuncionarioEndereco fe) throws SQLException {
 
-        try {
+
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
             String sql = "delete from clientes where pk_endereco=" + fe.getPk_endereco();
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+     
     }
 
-    public static void update(FuncionarioEndereco fe) {
-        try {
+    public static void update(FuncionarioEndereco fe) throws SQLException {
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -150,9 +133,7 @@ public class FuncionarioEnderecoDAO {
 
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
     }
 

@@ -26,6 +26,11 @@
                 <MenuItem mnemonicParsing="false" onAction="#abraTelaVenda" text="Realizar Venda" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Compra">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#abraTelaCompra" text="Realizar Compra" />
+              </items>
+            </Menu>
          </menus>
       </MenuBar>
       <AnchorPane fx:id="anchorPaneTelas" prefHeight="200.0" prefWidth="200.0" />

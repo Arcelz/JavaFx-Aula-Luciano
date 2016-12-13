@@ -1,11 +1,8 @@
 package empresafxtotal.model;
 
 
-import empresafxtotal.controller.Produto;
-import empresafxtotal.controller.Venda;
 import empresafxtotal.controller.VendaItem;
-import empresafxtotal.model.BancoDados;
-import empresafxtotal.model.ProdutoDAO;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -59,7 +56,9 @@ public class VendaItemDAO {
                 rs.getInt("fk_venda"),
                 ProdutoDAO.retreave(rs.getInt("fk_produto")),
                 rs.getInt("qtd"),
-                rs.getDouble("valor_unitario")));
+                rs.getDouble("valor_unitario"),
+                rs.getInt("pk_item"))
+                      );
         
         }
         return vendaitens;

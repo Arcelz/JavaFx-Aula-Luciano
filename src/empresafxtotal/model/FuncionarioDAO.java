@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 
 public class FuncionarioDAO {
 
-    public static int create(Funcionario func) {
-        try {
+    public static int create(Funcionario func) throws SQLException {
+   
             Statement stm = BancoDados.createConnection().createStatement();
             //
             String sql = "insert into funcionarios (nome,cpf,fk_cargo) values('" + func.getNome() + "','" + func.getCpf() + "','"
@@ -36,15 +36,10 @@ public class FuncionarioDAO {
 
             return key;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return 0;
     }
 
-    public static Funcionario retreave(int pk_funcionario) {
-        try {
+    public static Funcionario retreave(int pk_funcionario) throws SQLException {
+   
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -58,15 +53,12 @@ public class FuncionarioDAO {
             //return new Funcionario(rs.getInt("pk_cliente"), rs.getString("nome"), rs.getString("cpf"), e);
             return new Funcionario(rs.getInt("pk_funcionario"), rs.getInt("fk_cargo"), rs.getString("nome"), rs.getString("cpf"), c, e);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
-        return null;
     }
 
-    public static ArrayList<Funcionario> retreaveAll() {
-        try {
+    public static ArrayList<Funcionario> retreaveAll() throws SQLException {
+   
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -89,16 +81,12 @@ public class FuncionarioDAO {
             }
 
             return cs;
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+ 
     }
 
-    public static void delete(Funcionario f) {
+    public static void delete(Funcionario f) throws SQLException {
 
-        try {
+  
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -106,14 +94,12 @@ public class FuncionarioDAO {
             System.out.println(sql);
             
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
 
     }
 
-    public static void update(Funcionario f) {
-        try {
+    public static void update(Funcionario f) throws SQLException {
+
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -121,9 +107,7 @@ public class FuncionarioDAO {
             FuncionarioEnderecoDAO.update(f.getFuncEndereco());
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
     }
 

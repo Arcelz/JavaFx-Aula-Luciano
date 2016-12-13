@@ -91,7 +91,7 @@ public class Cliente {
     public String toString() {
         return nome;
     }
-    public void save(){
+    public void save() throws SQLException{
         ClienteDAO.create(this);
     }
   

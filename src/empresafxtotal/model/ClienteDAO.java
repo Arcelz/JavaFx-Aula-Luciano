@@ -24,8 +24,8 @@ public class ClienteDAO {
 
     }
 
-    public static int create(Cliente c) {
-        try {
+    public static int create(Cliente c) throws SQLException {
+      
             Statement stm = BancoDados.createConnection().createStatement();
             //
             String sql = "insert into clientes (nome,cpf) values('" + c.getNome() + "','" + c.getCpf() + "')";
@@ -40,15 +40,11 @@ public class ClienteDAO {
 
             return key;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return 0;
+   
     }
 
-    public static Cliente retreave(int pk_cliente) {
-        try {
+    public static Cliente retreave(int pk_cliente) throws SQLException {
+      
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -61,15 +57,12 @@ public class ClienteDAO {
             Endereco e = EnderecoDAO.retreaveByCliente(pk_cliente);
             return new Cliente(rs.getInt("pk_cliente"), rs.getString("nome"), rs.getString("cpf"), e);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+        
+      
     }
 
-    public static ArrayList<Cliente> retreaveAll() {
-        try {
+    public static ArrayList<Cliente> retreaveAll() throws SQLException {
+     
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -89,15 +82,11 @@ public class ClienteDAO {
             }
 
             return cs;
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+     
     }
 
-    public static Cliente retreaveByClienteEnde(int fk_cliente) {
-        try {
+    public static Cliente retreaveByClienteEnde(int fk_cliente) throws SQLException {
+
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
@@ -110,42 +99,34 @@ public class ClienteDAO {
             Endereco e = EnderecoDAO.retreaveByCliente(fk_cliente);
             return new Cliente(rs.getInt("pk_cliente"), rs.getString("nome"), rs.getString("cpf"), e);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+     
     }
 
-    public static void delete(Cliente c) {
+    public static void delete(Cliente c) throws SQLException {
 
-        try {
+     
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
             String sql = "delete from clientes where pk_cliente=" + c.getPk_cliente();
             System.out.println(sql);
             stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
     }
 
   
-    public static void update(Cliente c) {
-        try {
+    public static void update(Cliente c) throws SQLException {
+     
             Statement stm
                     = BancoDados.createConnection().
                     createStatement();
             String sql = "update  clientes set " + "nome='" + c.getNome() + "',cpf='" + c.getCpf() + "'where pk_Cliente=" + c.getPk_cliente();
-            EnderecoDAO.update(c.getEndereco());
             System.out.println(sql);
-            stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            EnderecoDAO.update(c.getEndereco());
 
+            stm.execute(sql);
+     
     }
 
 }

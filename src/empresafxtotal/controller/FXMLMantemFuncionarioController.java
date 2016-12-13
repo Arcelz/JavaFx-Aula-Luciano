@@ -8,19 +8,19 @@ package empresafxtotal.controller;
 import empresafxtotal.model.CargoDAO;
 import empresafxtotal.model.FuncionarioDAO;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * FXML Controller class
- *
- * @author Usuario-PC
- */
+
 public class FXMLMantemFuncionarioController implements Initializable {
 
     private Funcionario f;
@@ -89,14 +89,36 @@ public class FXMLMantemFuncionarioController implements Initializable {
 "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
 "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
     
-    List<Funcionario> l = FuncionarioDAO.retreaveAll();
-    comboBoxFuncionarios.getItems().addAll(l);
-          List<Cargo> carg = CargoDAO.retreaveAll();
-        comboBoxCargo.getItems().addAll(carg);
+    List<Funcionario> l;
+        try {
+            l = FuncionarioDAO.retreaveAll();
+            comboBoxFuncionarios.getItems().addAll(l);
+
+        } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+  alert.setTitle("Aconteceu um erro em funcionario");
+            alert.setHeaderText("Erro em funcionario");
+            alert.setContentText(Logger.getLogger(FXMLMantemFuncionarioController.class.getName()).getName());
+
+            alert.showAndWait();  
+        }
+          List<Cargo> carg;
+        try {
+            carg = CargoDAO.retreaveAll();
+                    comboBoxCargo.getItems().addAll(carg);
+
+        } catch (SQLException ex) {
+Alert alert = new Alert(Alert.AlertType.ERROR);
+  alert.setTitle("Aconteceu um erro em funcionario");
+            alert.setHeaderText("Erro em carregar cargos em funcionario");
+            alert.setContentText(Logger.getLogger(FXMLMantemFuncionarioController.class.getName()).getName());
+
+            alert.showAndWait();          }
 }
     public void load(){
         f = comboBoxFuncionarios.getValue();
-        
+        e = comboBoxFuncionarios.getValue().getFuncEndereco();
+
         textFieldnome.setText(f.getNome());
         textFieldCpf.setText(f.getCpf());
         comboBoxCargo.setValue(f.getCargo());
@@ -128,18 +150,36 @@ public class FXMLMantemFuncionarioController implements Initializable {
             e = new FuncionarioEndereco();
             insert = true;
         }
+         e.setBairro(textFieldBairro.getText());
+        e.setEstado(comboBoxEstado.getValue());
+        e.setLogradouro(textFieldEndereco.getText());
+        e.setCidade(textFieldCidade.getText());
+        e.setPais(comboBoxPais.getValue());
+        e.setCep(textFieldCep.getText());
+        f.setNome(textFieldnome.getText());
+        f.setCpf(textFieldCpf.getText());
+        f.setFuncEndereco(e);
+        
          if (insert){
-             e =  new FuncionarioEndereco(textFieldEndereco.getText(), textFieldBairro.getText(), textFieldCidade.getText(), comboBoxEstado.getValue(), comboBoxPais.getValue(), textFieldCep.getText());
-             f = new Funcionario(textFieldnome.getText(), textFieldCpf.getText(),comboBoxCargo.getValue().getPk_cargo());
-             f.setFuncEndereco(e);
-             f.save();
+            try {
+                f.save();
+            } catch (SQLException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+  alert.setTitle("Aconteceu um erro em funcionario");
+            alert.setHeaderText("Erro em salvar funcionario");
+            alert.setContentText(Logger.getLogger(FXMLMantemFuncionarioController.class.getName()).getName());
+            alert.showAndWait();  
+            }
          }
          else{
-             System.err.println("Edicao pkFuncionario+"+pkFuncionario);
-              e =  new FuncionarioEndereco(textFieldEndereco.getText(), textFieldBairro.getText(), textFieldCidade.getText(), comboBoxEstado.getValue(), comboBoxPais.getValue(), textFieldCep.getText(),fkEndereco,pkFuncionario);
-             f = new Funcionario(pkFuncionario,textFieldnome.getText(), textFieldCpf.getText(),comboBoxCargo.getValue().getPk_cargo());
-             f.setFuncEndereco(e);
-             f.update();
+            try {
+                f.update();
+            } catch (SQLException ex) {
+Alert alert = new Alert(Alert.AlertType.ERROR);
+  alert.setTitle("Aconteceu um erro em funcionario");
+            alert.setHeaderText("Erro em atualizar funcionario");
+            alert.setContentText(Logger.getLogger(FXMLMantemFuncionarioController.class.getName()).getName());
+            alert.showAndWait();             }
          }
     }
     public void cancelar(){

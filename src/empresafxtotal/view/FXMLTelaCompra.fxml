@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empresafxtotal.controller.FXMLTelaCompraController">
+   <children>
+      <ComboBox fx:id="comboBoxFornecedores" layoutX="14.0" layoutY="36.0" prefWidth="150.0" promptText="Fornecedores" />
+      <ComboBox fx:id="comboBoxProdutos" layoutX="14.0" layoutY="71.0" prefWidth="150.0" promptText="Produtos" />
+      <TextField fx:id="textFieldValorUnitario" layoutX="15.0" layoutY="110.0" promptText="Valor unitario" />
+      <TextField fx:id="textFieldQuantidade" layoutX="15.0" layoutY="146.0" promptText="Quantidade" />
+      <TextField fx:id="textFieldNumero" disable="true" layoutX="15.0" layoutY="181.0" text="Numero" />
+      <Button fx:id="botaoAdicionar" layoutX="15.0" layoutY="214.0" mnemonicParsing="false" onAction="#load" text="Adicionar" />
+      <Button fx:id="botaoDeletar" layoutX="97.0" layoutY="214.0" mnemonicParsing="false" onAction="#deletar" prefHeight="25.0" prefWidth="67.0" text="Deletar" />
+      <ComboBox fx:id="comboCompras" layoutX="14.0" layoutY="258.0" prefHeight="25.0" prefWidth="102.0" promptText="Compras" />
+      <Button layoutX="115.0" layoutY="258.0" mnemonicParsing="false" onAction="#carregar" prefHeight="25.0" prefWidth="47.0" text="Load" />
+      <TableView fx:id="tableViewCompraItens" layoutX="184.0" layoutY="34.0" prefHeight="317.0" prefWidth="404.0">
+        <columns>
+          <TableColumn fx:id="TableColumnNome" prefWidth="196.0" resizable="false" text="Nome" />
+          <TableColumn fx:id="tableColumnValorUnitario" minWidth="0.0" prefWidth="118.0" resizable="false" text="Valor unitario" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="89.0" resizable="false" text="Quantidade" />
+        </columns>
+      </TableView>
+      <Button layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="53.0" text="Salvar" />
+      <Label layoutX="185.0" layoutY="365.0" text="Valor Compra:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelValorTotal" layoutX="287.0" layoutY="365.0" prefHeight="17.0" prefWidth="139.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

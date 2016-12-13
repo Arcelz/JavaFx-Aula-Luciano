@@ -9,41 +9,41 @@ package empresafxtotal.controller;
  *
  * @author Usuario-PC
  */
-public class VendaItem {
+public class CompraItem {
     private int qtd;
     private double valorUnitario;
     private Produto produto;
     
 
     
-    private int fkVenda;
-    private int pkVendaItem;
+    private int fkCompra;
+    private int pkCompraItem;
 
   
    
 
-    public VendaItem() {
+    public CompraItem() {
     }
 
-    public VendaItem(int fkVenda,Produto produto,int qtd,double valorUnitario ) {
+    public CompraItem(int fkCompra,Produto produto,int qtd,double valorUnitario ) {
         this.qtd = qtd;
         this.valorUnitario = valorUnitario;
         this.produto = produto;
-        this.pkVendaItem = pkVendaItem;
+        this.pkCompraItem = pkCompraItem;
     }
 
-    public VendaItem(int qtd, double valorUnitario, Produto produto) {
+    public CompraItem(int qtd, double valorUnitario, Produto produto) {
         this.qtd = qtd;
         this.valorUnitario = valorUnitario;
         this.produto = produto;
     }
 
-    public VendaItem(int fkVenda,Produto produto,int qtd,double valorUnitario, int pkVendaItem) {
+    public CompraItem(int fkCompra,Produto produto,int qtd,double valorUnitario, int pkCompraItem) {
         this.qtd = qtd;
         this.valorUnitario = valorUnitario;
         this.produto = produto;
-        this.fkVenda = fkVenda;
-        this.pkVendaItem = pkVendaItem;
+        this.fkCompra = fkCompra;
+        this.pkCompraItem = pkCompraItem;
     }
     
 
@@ -71,25 +71,27 @@ public class VendaItem {
         this.produto = produto;
     }
 
-    public int getFkVenda() {
-        return fkVenda;
+    public int getFkCompra() {
+        return fkCompra;
     }
 
-    public void setFkVenda(int fkVenda) {
-        this.fkVenda = fkVenda;
+    public void setFkCompra(int fkCompra) {
+        this.fkCompra = fkCompra;
     }
 
-    public int getPkVendaItem() {
-        return pkVendaItem;
+    public int getPkCompraItem() {
+        return pkCompraItem;
     }
 
-    public void setPkVendaItem(int pkVendaItem) {
-        this.pkVendaItem = pkVendaItem;
+    public void setPkCompraItem(int pkCompraItem) {
+        this.pkCompraItem = pkCompraItem;
     }
+
+  
 
     @Override
     public String toString() {
-        return "VendaItem{" + "qtd=" + qtd + ", valorUnitario=" + valorUnitario + ", produto=" + produto + ", fkVenda=" + fkVenda + ", pkVendaItem=" + pkVendaItem + '}';
+        return "VendaItem{" + "qtd=" + qtd + ", valorUnitario=" + valorUnitario + ", produto=" + produto + ", fkCompra=" + fkCompra + ", pkCompraItem=" + pkCompraItem + '}';
     }
     
     

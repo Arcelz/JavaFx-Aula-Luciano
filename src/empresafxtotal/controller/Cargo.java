@@ -6,6 +6,7 @@
 package empresafxtotal.controller;
 
 import empresafxtotal.model.CargoDAO;
+import java.sql.SQLException;
 
 
 public class Cargo {
@@ -61,10 +62,10 @@ public class Cargo {
     public String toString() {
         return nome;
     }
-    public void save(){
+    public void save() throws SQLException{
         CargoDAO.create(this);
     }
-    public void update(){
+    public void update() throws SQLException{
         CargoDAO.update(this);
     }
 

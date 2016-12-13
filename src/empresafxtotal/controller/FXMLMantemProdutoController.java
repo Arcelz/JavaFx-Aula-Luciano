@@ -7,10 +7,14 @@ package empresafxtotal.controller;
 
 import empresafxtotal.model.ProdutoDAO;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -38,8 +42,19 @@ public class FXMLMantemProdutoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<Produto> l = ProdutoDAO.retreaveAll();
-        comboBoxProdutos.getItems().addAll(l);
+        List<Produto> l;
+        try {
+            l = ProdutoDAO.retreaveAll();
+            comboBoxProdutos.getItems().addAll(l);
+
+        } catch (SQLException ex) {
+Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aconteceu um erro em produto");
+            alert.setHeaderText("Erro em carregar produto");
+            alert.setContentText(Logger.getLogger(FXMLMantemProdutoController.class.getName()).getName());
+
+            alert.showAndWait();
+          }
     }    
     public void load(){
         p = comboBoxProdutos.getValue();
@@ -58,14 +73,30 @@ public class FXMLMantemProdutoController implements Initializable {
           p = new Produto();
           insert = true;
       }
+      p.setNome(textFieldNome.getText());
+      p.setEstoqueMinino(Integer.parseInt(textFieldEstoqueMin.getText()));
            if (insert) {
-               p = new Produto(textFieldNome.getText(),Integer.parseInt(textFieldEstoqueMin.getText()), 0);
-               p.save();
+          try {
+              p.setQtdEstoque(0);
+              p.save();
+          } catch (SQLException ex) {
+Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aconteceu um erro em produto");
+            alert.setHeaderText("Erro em salvar produto");
+            alert.setContentText(Logger.getLogger(FXMLMantemProdutoController.class.getName()).getName());
+
+            alert.showAndWait();          }
            }
            else{
-             p = new Produto(pkProduto,textFieldNome.getText(),Integer.parseInt(textFieldEstoqueMin.getText()), 0);
-  
-             p.update();
+            try {
+              p.update();
+          } catch (SQLException ex) {
+Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aconteceu um erro em produto");
+            alert.setHeaderText("Erro em atualizar produto");
+            alert.setContentText(Logger.getLogger(FXMLMantemProdutoController.class.getName()).getName());
+
+            alert.showAndWait();          }
            }
                    limpaTela();
 
